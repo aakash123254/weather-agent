@@ -132,12 +132,12 @@ root_agents = Agent(
        
        1. get_weather(city): Retrieves current weather for a specified city 
        2. get_forecast(city,days) : Retrieves weather forecast for a city(1-5 days)
-       3. analyze_weather_trends(city,days) : Analyzes weather trends and patterns for a city(1-5 days)    
+       3. analyze_weather_trends(city,days) : Analyzes weather trend and patterns for a city(1-5 days)    
        4. kelvin_to_celsius(temperature): Converts temperature from Kelvin to Celsius
        5. miles_to_km(miles): Converts distance from miles to kilometers
        
        Use these tools to provide accurate, detailed weather information based on user request.
-       Handle any errors that occur gracefully and provide helpful guidance to the user.
+       Handle any errors that occur gracefully and provide helpful guidance to the user .
        """,
        
        tools = [
