@@ -103,4 +103,103 @@ async def get_weather(city: str) -> Dict[str,Any]:
         raise 
 
 async def get_forecast(city: str, days:int = 5) -> Dict[str,Any]:
+    """Get weather forecast for a city.
+    
+    Args:
+        city: City name
+        days: Number of days to forecast(1-5)
+    
+    Returns:
+        Dictionary with forecast data
+    
+    Raises:
+        ValidationError: If parameters are invalid 
+        WeatherAPIError: If the API returns an error
+        ConnectionError: If there's a network issue
+    """
+    if not city or not isinstance(city,str) or len(city.strip()) == 0:
+        logger.error("Invalid city parameter")
+        raise ValidationError("City name must be a non-empty string")
+    
+    if not isinstance(days,int) or days < 1 or days >5 :
+        logger.error(f"Invalid days parameter: {days}")
+        raise ValidationError("Days must be an integer between 1 and 5")
+    
+    try:
+        params = {
+            'q' : city,
+            'cnt' : days *8 
+        }
+        
+        return await _make_api_call('forecast',params)
+    except Exception as e:
+        logger.error(f"Error getting forecast for {city}: {str(e)}")
+        raise 
+    
+def kelvin_to_celsius(temperature: float) ->Dict[str,Any]:
+    """Convert temperature from Kelvin to Celsius.
+    
+    Args:
+        temperature: Temperature in Kelvin
+    
+    Raises: 
+        ValidationError: If temperature parameter is invalid
+    """
+    
+    try:
+        #Validate the temperature parameter
+        if not isinstance(temperature, (float,int)):
+            raise ValidationError("Temperature must be a number")
+        
+        # Validate that the temperature is not absurdly low (absolute zero is -273.15°C)
+        if temperature< 0:
+            logger.warning(f"Temperature below absolute zero: {temperature}K")
+            raise ValidationError("Temperature cannot be below absolute zero (OK)")
+        
+        celsius = temperature - 273.15
+        return {
+            "kelvin" : temperature,
+            "celsius" : celsius,
+            "formatted": f"{celsius:.1f}°C"
+        }
+    except ValidationError:
+        raise 
+    except Exception as e:
+        logger.error(f"Error converting temperature: {str(e)}")
+        raise ValueError(f"Failed  to convert temperature: {str(e)}")
+
+def miles_to_km(miles : float) -> Dict[str,Any]:
+    """Convert distance from miles to kilometer. 
+    
+    Args:
+        miles: Distances in miles
+        
+    Returns:
+        Dictionary with the converted distances in kilometers
+    
+    Raises: 
+        ValidationError : If miles parameter is invalid
+    """
+    
+    try:
+        # Validate the miles parameter
+        if not isinstance(miles, (float,int)):
+            raise ValidationError("Distance must be a number ")
+        
+        #Validate that the distance is not negative 
+        if miles < 0:
+            logger.warning(f"Negative distance provided: {miles} miles")
+            raise ValidationError("Distance cannot be negative ")
+        
+        kilometers = miles * 1.60934
+        return {
+            "miles" : miles,
+            "kilometers" : kilometers,
+            "formatted" : f"{kilometers:.2f} km"
+        }
+    except ValidationError:
+        raise 
+    except Exception as e:
+        logger.error(f"Error converting distance: {str(e)}")
+        raise ValueError(f"Failed to convert distances: {str(e)}")
     
