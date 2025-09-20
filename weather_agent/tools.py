@@ -23,3 +23,84 @@ class ValidationError(Exception):
     """Custom Exception for OpenWeather API errors."""
     pass
 
+async def _make_api_call(endpoint: str, params: Dict[str,Any]) -> Dict[str,Any]:
+    """Make an API call to OpenWeather.
+    
+    Args: 
+        endpoint: API endpoint to call
+        params: Query parameters for the API call
+    
+    Returns: 
+        Dictionary with the API responses
+    
+    Raises:
+        WeatherAPIError: If the API returns an error 
+        ConnectionError: If there's a network issue
+        TimeoutError: If the API request times out 
+    """
+    
+    url = f"{BASE_WEATHER_URL}{endpoint}"
+    
+    # Verify that the API key is configured 
+    if not WEATHER_API_KEY:
+        logger.error("API key not configured. Please set WEATHER_API_KEY in .env file")
+        raise WeatherAPIError(401,"API key not configured")
+    
+    params.update({
+        'appid' : WEATHER_API_KEY,
+        'lang' : LANGUAGE
+    })
+    
+    try:
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url, params = params, timeout=10) as response:
+                data = await response.json()
+                if response.status !=200:
+                    error_msg = data.get('message','Unknown error')
+                    logger.error(f"API error {response.status}: {error_msg} for endpoint {endpoint} with {params}")
+                    raise WeatherAPIError(response.status, error_msg)
+                return data 
+    except aiohttp.ClientConnectionError as e:
+        logger.error(f"Connection error: {str(e)}")
+        raise ConnectionError(f"Failed to connect to OpenWeather API: {str(e)}")
+    except aiohttp.ClientResponseError as e:
+        logger.error(f"Response error: {str(e)}")
+        raise WeatherAPIError(e.status,str(e))
+    except aiohttp.ClientError as e:
+        logger.error(f"Client error: {str(e)}")
+        raise ConnectionError(f"API request failed: {str(e)}")
+    except asyncio.TimeoutError:
+        logger.error("Request timed out")
+        raise TimeoutError("OpenWeather API request timed out")
+    except Exception as e:
+        logger.error(f"Unexpected error: {str(e)}")
+        raise 
+
+async def get_weather(city: str) -> Dict[str,Any]:
+    """Get current weather for a city.
+    
+    Args:
+        city:City name 
+    
+    Returns: 
+        Dictionary with current weather data 
+    
+    Raises:
+        ValidationError: If city parameter is invalid 
+        WeatherAPIError: If the API returns an error 
+        ConnectionError: If there's a network issue
+    """
+    
+    if not city or not isinstance(city,str) or len(city.strip()) == 0:
+        logger.error("Invalid city parameter")
+        raise ValidationError("City name must be a non-empty string")
+    
+    try:
+        params = {'q':city}
+        return await _make_api_call('weather',params)
+    except Exception as e:
+        logger.error(f"Error getting weather for {city}: {str(e)}")
+        raise 
+
+async def get_forecast(city: str, days:int = 5) -> Dict[str,Any]:
+    
