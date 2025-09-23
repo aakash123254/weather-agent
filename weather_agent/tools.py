@@ -388,3 +388,4 @@ async def analyze_weather_trends(city: str, days: int = 5) -> Dict[str, Any]:
     except Exception as e:
         logger.error(f"Error analyzing weather trends for {city}: {str(e)}")
         raise
+    
