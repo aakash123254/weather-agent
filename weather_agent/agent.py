@@ -1,7 +1,7 @@
 from google.adk.agents import Agent 
 from . import tools 
 
-root_agents = Agent(
+root_agent = Agent(
     name = "weather_agent",
     model = "gemini-2.5-flash",
     description = "Weather Agent powered by OpenWeatherMap API",
