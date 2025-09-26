@@ -1,0 +1,172 @@
+# Weather Agent: Programming Languages Final Project 
+
+![Weather Agent] (https://img.shields.io/badge/Weather%20Agent-1.00-blue)
+![Python] (https://img.shields.io/badge/Python-3.8%2B-brightgreen)
+![ADK](https://img.shields.io/badge/Google%20ADK-Latest-orange)
+![Gemini](https://img.shields.io/badge/Gemini%20API-2.5-purple)
+
+A sophisticated weather agent built with Google's Agent Development Kit
+(ADK) that demonstrate multiple programming paradigms including functional, imperative, and asynchronous programming. 
+
+## Overview 
+
+Weather Agent is an intelligent assistant that provides comprehensive meteorological information for cities worldwide usng the OpenWeatherMap
+API. The agent leverages multiple programming paradigms to deliver a robust, efficient, and user-friendly experience:
+
+- **Functional Programming** : Pure functions, higher-order functions, function composition, and data transformations
+- **Imperative Programming** : Sequential instructions, state modification, and control flow
+- **Asynchronous Programming** : Non-blocking API calls for improved performance
+- **Object-Oriented Programming** : Custom exception classes and structured data models
+
+The agent is powered by Google's Gemini AI model, providing natural language understanding and generation capabilities that enable intuitive
+interactions with users. 
+
+## Features 
+
+### Core Capabilties 
+
+- **Current Weather Data** : Detailed current conditions for any city 
+worldwide
+- **Weather Trend Analysis** : Temperature trends, dominant conditions,
+and statistical analysis
+- **Unit Conversions** : Temperature and distance conversions with multiple formats 
+- **Natural Language Understanding** : Powered by Google's Gemini AI model
+
+### Technical Highlights
+
+- **Robust Error Handling** : Custom exceptions, validation, and user-friendly error messages
+- **Functional Programming Utilities** : Pure functions, higher-order functions, and functional data processing.
+- **Asynchronous API Integration** : Non - blocking API calls using aiohttp
+- **AI-Powered Interaction** : Gemini API integration for natural language processing.
+
+## Architecture 
+
+The project is structured around the following components:
+
+- `agent.py` : Main agent configuration and prompt engineering using Gemini AI
+- `tools.py` : Core functionality including API calls and basic utilities
+- `functional.py` : Functional programming utilities and data transformations
+- `config.py` : Configuration settings and environment variables
+
+### Programming Paradigms Demonstrated
+
+#### Functional Programming 
+- Pure functions for data transformations 
+- Higher-order functions and function composition 
+- Map, filter and reduce operations 
+- Immutable and data stuctures 
+- Currying and partial application 
+
+#### Asynchronous Programming 
+- Asynchronous API calls with aiohttp 
+- Async/await syntax for non-blocking operations 
+- Concurrent data processing 
+
+#### Imperative Programming 
+- Sequential execution flow 
+- State management 
+- Conditional logic and loops 
+
+## Requirements 
+
+- Python 3.8 or higher 
+- Dependencies:
+    - `aiohttp` : For asynchronous HTTP requests
+    - `python-dotenv` : For enviorment variable management 
+    - `google-adk` : For agent development framework 
+- OpenWeatherMap API Key 
+- Google Gemini API Key 
+
+## Installation 
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/aakash123254/weather-agent
+   cd weather-agent 
+   ```
+2. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+3. Create a `.env` file in the project root with:
+   ```
+   WEATHER_API_KEY=your_openweathermap_api_key
+   GEMINI_API_KEY=your_gemini_api_key
+   ```
+     > **Note**: 
+   > - Register on [OpenWeatherMap](https://openweathermap.org/) to get a free API key (it may take a few hours to activate).
+   > - Get a Gemini API key from the [Google AI Studio](https://ai.google.dev/) or [Google Cloud Console](https://console.cloud.google.com/).
+
+## Usage 
+
+### Running the agent 
+
+```bash
+adk web
+```
+
+This will start the ADK web interface, typically available at  http://localhost:8000.
+
+### Available Tools
+
+The agent provides the following tools:
+
+- `get_weather(city)` : Gets the current weather for a city 
+- `getforecast(city,days = 5)` : Gets the weather forecast for a city 
+- `analyze_weather_trends(city,days=5)` : Analyze weather trends using functional programming 
+- `Kelvin_to_celsius(temperature)` : Converts temperature from kelvin to 
+Celsius
+- `miles_to_km(miles)` : Converts distance from miles to kilometers
+
+### Example Queries 
+
+- "What's the current weather in London?"
+- "Show me the forecast for Tokyo for the next 3 days"
+- "Analyze weather trends in New York"
+- "Convert 300 Kelvin to Celsius"
+- "How many kilometers are in 10 miles?"
+
+## Weather Trend Analysis 
+
+The `analyze_weather_trends` tools demonstrate functional programming principle by:
+
+1. Extracting temperature data using pure functions 
+2. Calculating trends with higher-order functions 
+3. Transforming data with map, filter, and reduce operations 
+4. Maintaining immutability throughout the analysis process 
+5. Composing functions for complex data processing 
+
+Results include temperature trends (warming,cooling,stable), dominant weather conditions, temperature ranges, and daily averages. 
+
+## AI integration with Gemini 
+The Weather Agent leverages Google's Gemini AI model to provide:
+
+1. **Natural Language Understanding** : The agent can interpret a wide variety of weather-related queries in natural language 
+2. **Contextual Response** : Responses are tailored to the specific query and context
+3. **Intelligent Error Handling** : When error occur, the agent provides helpful suggestions in natural language
+4. **Conversational Experience** : User can interact with the agent in a conversational manner. 
+
+The Gemini integration is configured in `agent.py` with a carefully crafted prompt that guides the model's behavior and response format.
+
+## Error Handling
+
+The system implements robust error handling with: 
+
+- Custom exception classes (`WeatherAPIError` , `ValidationError`)
+- Parameter validation for all function 
+- Comprehensive logging with different severity levels 
+- User-friendly error messages and suggestions 
+
+## Security Notes 
+
+- Keep API Keys private and do not share them publicly 
+- The agent uses enviorment variables for secure credential management 
+- All API calls are made over HTTPS for data security 
+
+## Academic Context 
+
+The implementation showcases how different paradigms can be combined effectively to create robust, maintainable, and efficient software.
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
