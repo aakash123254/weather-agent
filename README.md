@@ -1,9 +1,11 @@
 # Weather Agent: Programming Languages Final Project 
 
-![Weather Agent] (https://img.shields.io/badge/Weather%20Agent-1.00-blue)
-![Python] (https://img.shields.io/badge/Python-3.8%2B-brightgreen)
+![Weather Agent](https://img.shields.io/badge/Weather%20Agent-1.00-blue)
+![Python](https://img.shields.io/badge/Python-3.8%2B-brightgreen)
 ![ADK](https://img.shields.io/badge/Google%20ADK-Latest-orange)
 ![Gemini](https://img.shields.io/badge/Gemini%20API-2.5-purple)
+
+
 
 A sophisticated weather agent built with Google's Agent Development Kit
 (ADK) that demonstrate multiple programming paradigms including functional, imperative, and asynchronous programming. 
