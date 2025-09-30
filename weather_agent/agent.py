@@ -1,6 +1,8 @@
 from google.adk.agents import Agent 
 from . import tools 
 
+
+#Agent File contains functions to run the agent 
 root_agent = Agent(
     name = "weather_agent",
     model = "gemini-2.5-flash",
